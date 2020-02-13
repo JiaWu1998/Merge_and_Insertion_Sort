@@ -23,7 +23,7 @@ public class Test {
     static long start_time, end_time, total_time;
 
     // initialize variables
-    static int seed = 600, n = 100, swap_speed = 30;
+    static int seed = 600, n = 401, swap_speed = 30;
     static Integer[] array = new Integer[n];
     static boolean sorting_method = true;
     static ArrayList<ArrayList<Integer>> all_snap_merge;
@@ -53,14 +53,20 @@ public class Test {
         //use InsertionSort and get all snap_shots
         insert = new InsertionSort(array.clone());
         System.out.println("Computing Insertion Sort.");
+        start_time = System.nanoTime();
         insert.insertion_sort(); // uses insertion sort
-        all_snap_insert = insert.show_snaps(); //stores all snapshots of original array
+        end_time = System.nanoTime();
+        System.out.println(end_time-start_time);
         System.out.println("Finished Insertion Sort.");
+        all_snap_insert = insert.show_snaps(); //stores all snapshots of original array
 
         //use MergeSort and get all snap_shots
         merge = new MergeSort(array.clone());
         System.out.println("Computing Merge Sort.");
-        merge.merge_sort();
+        start_time = System.nanoTime();
+        merge.merge_sort(); // uses merge sort
+        end_time = System.nanoTime();
+        System.out.println(end_time - start_time);
         System.out.println("Finished Merge Sort.");
         all_snap_merge = merge.show_snaps(); //stores all snapshots of original array
 
