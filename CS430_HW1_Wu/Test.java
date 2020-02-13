@@ -16,6 +16,8 @@ import java.awt.event.ActionListener;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.awt.BorderLayout;
+import java.awt.Component;
+import javax.swing.BoxLayout;
 
 public class Test {
     // initialize timing variables
@@ -25,6 +27,10 @@ public class Test {
     static int seed = 600, n = 100, swap_speed = 30;
     static Integer[] array = new Integer[n];
     static boolean sorting_method = true;
+    static ArrayList<ArrayList<Integer>> all_snap_merge;
+    static ArrayList<ArrayList<Integer>> all_snap_insert;
+    static InsertionSort insert;
+    static MergeSort merge;
 
     public static void initialize_array(int seed, Integer[] input, int size) {
         Random random_generator = new Random(seed);
@@ -43,18 +49,18 @@ public class Test {
         initialize_array(seed, array, n);
 
         // use InsertionSort --------------------------------------------------------------------------
-        InsertionSort insert = new InsertionSort(array.clone());
+        insert = new InsertionSort(array.clone());
         System.out.println("Computing Insertion Sort.");
         insert.insertion_sort(); // uses insertion sort
-        ArrayList<ArrayList<Integer>> all_snap_insert = insert.show_snaps(); //stores all snapshots of original array
+        all_snap_insert = insert.show_snaps(); //stores all snapshots of original array
         System.out.println("Finished Insertion Sort.");
 
         //use MergeSort ------------------------------------------------------------------------------
-        MergeSort merge = new MergeSort(array.clone());
+        merge = new MergeSort(array.clone());
         System.out.println("Computing Merge Sort.");
         merge.merge_sort();
         System.out.println("Finished Merge Sort.");
-        ArrayList<ArrayList<Integer>> all_snap_merge = merge.show_snaps(); //stores all snapshots of original array
+        all_snap_merge = merge.show_snaps(); //stores all snapshots of original array
 
         // initialize GUI frame and constants
         JFrame frame = new JFrame("Merge Sort");
@@ -63,10 +69,16 @@ public class Test {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // add buttons to switch between sorts and Text field to change problem size
-        JPanel button_panel_left = new JPanel();
-        JButton switch_button = new JButton("Switch to Insertion");
+
+        // This panel stores everything other than the sorting animation
+        JPanel panel_left = new JPanel();
+        panel_left.setLayout(new BoxLayout(panel_left, BoxLayout.Y_AXIS));
+
+        // add a button to switch between sorts
+        JPanel button_panel = new JPanel();
+        JButton switch_button = new JButton("Switch to Insertion"); 
         switch_button.setMaximumSize(new Dimension(100, 100));
+        switch_button.setAlignmentX(Component.CENTER_ALIGNMENT);
         switch_button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if(frame.getTitle().equals("Insertion Sort")){
@@ -84,9 +96,49 @@ public class Test {
                 sorting_switch();
             }
         });
-        button_panel_left.add(switch_button);
+        button_panel.add(switch_button);
+        panel_left.add(button_panel);
         
-        frame.add(button_panel_left,BorderLayout.WEST);
+        // add Text field to change problem size
+        JPanel text_field_panel = new JPanel();
+        JLabel problem_size_label = new JLabel("Enter Problem Size:");
+        JTextField problem_size = new JTextField();
+        
+        problem_size.setAlignmentX(Component.CENTER_ALIGNMENT);
+        problem_size.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) throws IllegalArgumentException{
+                try{
+                    int temp_n = Integer.parseInt(problem_size.getText());
+                    if(temp_n > 0){
+                        n = temp_n;
+                        array = new Integer[n];
+                        initialize_array(seed, array, n);
+
+                        insert = new InsertionSort(array.clone());
+                        System.out.println("Computing Insertion Sort.");
+                        insert.insertion_sort();
+                        System.out.println("Finished Insertion Sort.");
+                        all_snap_insert = insert.show_snaps();
+
+                        merge = new MergeSort(array.clone());
+                        System.out.println("Computing Merge Sort.");
+                        merge.merge_sort();
+                        System.out.println("Finished Merge Sort.");
+                        all_snap_merge = merge.show_snaps();
+                    }else{
+                        System.out.print("Invalid problem size");
+                    }
+                }catch(IllegalArgumentException a){
+                    System.out.print("Invalid problem size");
+                }
+            }
+        });
+        text_field_panel.add(problem_size_label);
+        text_field_panel.add(problem_size);
+        panel_left.add(text_field_panel);
+
+
+        frame.add(panel_left,BorderLayout.WEST);
 
         // initialize drawing panel
         Drawer draw = new Drawer();
