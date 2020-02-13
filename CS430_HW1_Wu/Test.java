@@ -21,11 +21,10 @@ public class Test {
     // initialize timing variables
     static long start_time, end_time, total_time;
 
-    // initialize n-array
-    static int seed = 600, n = 1000;
+    // initialize variables
+    static int seed = 600, n = 100, swap_speed = 30;
     static Integer[] array = new Integer[n];
     static boolean sorting_method = true;
-    static boolean stop = false;
 
     public static void initialize_array(int seed, Integer[] input, int size) {
         Random random_generator = new Random(seed);
@@ -38,10 +37,6 @@ public class Test {
 
     public static void sorting_switch(){
         sorting_method = !sorting_method;
-    }
-
-    public static void stop_switch(){
-        stop = !stop;
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -68,10 +63,6 @@ public class Test {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // initialize drawing panel
-        Drawer draw = new Drawer();
-        draw.setMaxNum(100);
-
         // add buttons to switch between sorts and Text field to change problem size
         JPanel button_panel_left = new JPanel();
         JButton switch_button = new JButton("Switch to Insertion");
@@ -97,15 +88,19 @@ public class Test {
         
         frame.add(button_panel_left,BorderLayout.WEST);
 
+        // initialize drawing panel
+        Drawer draw = new Drawer();
+        draw.setMaxNum(100);
+
         //animation 
         while(true){
             if(sorting_method){
                 for(int i = 0; i < all_snap_merge.size(); i++){
-                    if(sorting_method && !stop){
+                    if(sorting_method){
                         frame.repaint();
                         draw.setSnap(all_snap_merge.get(i));
                         frame.add(draw);
-                        Thread.sleep(1);  
+                        Thread.sleep(swap_speed);  
                     }else{
                         break;
                     }
@@ -113,11 +108,11 @@ public class Test {
             }
             if(!sorting_method){
                 for(int i = 0; i < all_snap_insert.size(); i++){
-                    if(!sorting_method && !stop){
+                    if(!sorting_method){
                         frame.repaint();
                         draw.setSnap(all_snap_insert.get(i));
                         frame.add(draw,BorderLayout.CENTER);
-                        Thread.sleep(1);
+                        Thread.sleep(swap_speed);
                     }else{
                         break;
                     }
