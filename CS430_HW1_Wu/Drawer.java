@@ -17,6 +17,9 @@ public class Drawer extends JPanel{
         g.setColor(Color.BLACK);
 
         int w = getWidth()/current_snap_shot.size();
+        if(w == 0){
+            g.drawString("Make Your Screen Bigger.", getWidth()/2, getHeight()/2);
+        }
         for(int i = 0; i < current_snap_shot.size(); i ++){
             int temp = (int) (((float) current_snap_shot.get(i)/ (float) bound) * (float) getHeight());
             g.fillRect(i*w, getHeight()-(temp), w, temp);
