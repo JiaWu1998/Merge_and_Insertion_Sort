@@ -13,9 +13,8 @@ public class Drawer extends JPanel{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         
-        //draw snap shot
+        //draws a snap shot
         g.setColor(Color.BLACK);
-
         int w = getWidth()/current_snap_shot.size();
         if(w == 0){
             g.drawString("Make Your Screen Bigger.", getWidth()/2, getHeight()/2);
@@ -32,6 +31,7 @@ public class Drawer extends JPanel{
     }
 
     public void setMaxNum(int b){
+        //gets the max random integer
         bound = b;    
     }
 }

@@ -15,9 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.awt.BorderLayout;
 import java.awt.Component;
-import javax.swing.BoxLayout;
+import java.awt.BorderLayout;
 
 public class Test {
     // initialize timing variables
@@ -42,20 +41,23 @@ public class Test {
     }
 
     public static void sorting_switch(){
+        //switchs sorting methods 
+        //when sorting_method is true, it is using merge sort.
+        //when sorting_method is false, it is using insertion sort.
         sorting_method = !sorting_method;
     }
 
     public static void main(String[] args) throws InterruptedException {
         initialize_array(seed, array, n);
 
-        // use InsertionSort --------------------------------------------------------------------------
+        //use InsertionSort and get all snap_shots
         insert = new InsertionSort(array.clone());
         System.out.println("Computing Insertion Sort.");
         insert.insertion_sort(); // uses insertion sort
         all_snap_insert = insert.show_snaps(); //stores all snapshots of original array
         System.out.println("Finished Insertion Sort.");
 
-        //use MergeSort ------------------------------------------------------------------------------
+        //use MergeSort and get all snap_shots
         merge = new MergeSort(array.clone());
         System.out.println("Computing Merge Sort.");
         merge.merge_sort();
@@ -70,11 +72,11 @@ public class Test {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-        // This panel stores everything other than the sorting animation
+        // This left panel stores everything other than the sorting animation
         JPanel panel_left = new JPanel();
         panel_left.setLayout(new BoxLayout(panel_left, BoxLayout.Y_AXIS));
 
-        // add a button to switch between sorts
+        // add a button the left panel to switch between sorts
         JPanel button_panel = new JPanel();
         JButton switch_button = new JButton("Switch to Insertion"); 
         switch_button.setMaximumSize(new Dimension(100, 100));
@@ -99,11 +101,11 @@ public class Test {
         button_panel.add(switch_button);
         panel_left.add(button_panel);
         
-        // add Text field to change problem size
+        // add Text field to the left panel to change problem size
         JPanel text_field_panel = new JPanel();
         JLabel problem_size_label = new JLabel("Enter Problem Size:");
-        JTextField problem_size = new JTextField();
-        
+        JTextField problem_size = new JTextField(10);
+
         problem_size.setAlignmentX(Component.CENTER_ALIGNMENT);
         problem_size.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) throws IllegalArgumentException{
@@ -137,14 +139,14 @@ public class Test {
         text_field_panel.add(problem_size);
         panel_left.add(text_field_panel);
 
-
+        //add the left panel to the frame
         frame.add(panel_left,BorderLayout.WEST);
 
         // initialize drawing panel
         Drawer draw = new Drawer();
         draw.setMaxNum(100);
 
-        //animation 
+        //add the drawing panel to the frame. aka: animation
         while(true){
             if(sorting_method){
                 for(int i = 0; i < all_snap_merge.size(); i++){
