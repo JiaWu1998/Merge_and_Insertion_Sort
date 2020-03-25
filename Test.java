@@ -40,13 +40,6 @@ public class Test {
         }
     }
 
-    // public static void sorting_switch(){
-    //     //switchs sorting methods 
-    //     //when sorting_method is true, it is using heap sort.
-    //     //when sorting_method is false, it is using quick sort.
-    //     sorting_method = !sorting_method;
-    // }
-
     public static void main(String[] args) throws InterruptedException {
         initialize_array(seed, array, n);
 
