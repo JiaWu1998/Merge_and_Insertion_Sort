@@ -45,9 +45,7 @@ public class CountingSort{
         Integer[] index = new Integer[max_range+1];
 
         //initialize index array with zeros
-        for(int i=0; i<index.length; i++){
-            index[i] = 0;
-        }
+        Arrays.fill(index,0);
 
         //For count each integer in the oringal array and store it in the index array 
         for(int i=0; i<array.length; i++){
