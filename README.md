@@ -1,1 +1,1 @@
-# Merge_and_Insertion_Sort
+# Visualizations of Different Sorting Algorithms
