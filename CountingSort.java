@@ -28,8 +28,6 @@ public class CountingSort{
     }
 
     public void sort(){
-        Integer[] temp = array;
-    
         int max_range = 0;
         for(int i=0; i<array.length; i++){
             if (array[i] > max_range){
@@ -41,11 +39,11 @@ public class CountingSort{
             }            
         }
 
-        Integer[] index = new Integer[max_range];
+        Integer[] index = new Integer[max_range+1];
 
         for(int i=0; i<index.length; i++){
             index[i] = 0;
-        } 
+        }
 
         for(int i=0; i<array.length; i++){
             index[array[i]] += 1;
@@ -55,8 +53,11 @@ public class CountingSort{
             index[i] += index[i-1];
         }
 
+        Integer[] temp = array.clone();
+
         for(int i=0; i<array.length; i++){
-            temp[index[array[i]]] = array[i];
+            temp[index[array[i]]-1] = array[i];
+            snap_shots.add(new ArrayList<Integer>(Arrays.asList(array)));
             index[array[i]] -= 1;
         }
 
