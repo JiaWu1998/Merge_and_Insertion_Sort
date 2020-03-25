@@ -40,7 +40,7 @@ public class InsertionSort{
         array[b] = temp;
     }
 
-    public void insertion_sort(){
+    public void sort(){
         //does inplace insertion sort on array
         int i = 1;
         int j;

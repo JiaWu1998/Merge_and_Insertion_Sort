@@ -86,24 +86,24 @@ public class MergeSort {
 
     }
 
-    public void sort(int left, int right){
+    public void merge_sort(int left, int right){
         //recursive calls to deconstruct the orignal array into singletons and merge back into a sorted array
         if (left < right){
             int mid = (left + right) / 2;
 
-            sort(left, mid);
-            sort(mid+1,right);
+            merge_sort(left, mid);
+            merge_sort(mid+1,right);
 
             merge(left,mid,right);
         }
     }
 
-    public void merge_sort(){
+    public void sort(){
         //records a snap shot of the array
         snap_shots.add(new ArrayList<Integer>(Arrays.asList(array)));
 
         //calls the recursive sorting function
-        sort(0,array.length-1);
+        merge_sort(0,array.length-1);
     }
 
 }
