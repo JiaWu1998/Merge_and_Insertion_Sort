@@ -5,8 +5,8 @@ public class HeapSort{
     public static Integer[] array; 
     public ArrayList<ArrayList<Integer>> snap_shots = new ArrayList<ArrayList<Integer>>();
 
-    public HeapSort(Integer[] input){
-        array = input;
+    public HeapSort(Integer[] input_array){
+        array = input_array;
     }
 
     public void set_array(Integer[] input_array){

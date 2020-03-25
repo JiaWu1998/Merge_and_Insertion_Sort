@@ -9,16 +9,28 @@ public class InsertionSort{
      */
     public static Integer[] array;
     public ArrayList<ArrayList<Integer>> snap_shots = new ArrayList<ArrayList<Integer>>();
-    ArrayList<Integer> temp;
 
     public InsertionSort(Integer[] input_array){
         //initialize the integer array
         array = input_array;
     }
 
-    public Integer[] getArray(){
+    public void set_array(Integer[] input_array){
+        array = input_array;
+    }
+
+    public Integer[] get_array(){
         //returns the integer array
         return array;
+    }
+
+    public ArrayList<ArrayList<Integer>> show_snaps(){
+        //returns all snap shots of the array
+        return snap_shots;
+    }
+
+    public void clear_history(){
+        snap_shots = new ArrayList<ArrayList<Integer>>();
     }
 
     public void swap(int a, int b){
@@ -33,15 +45,13 @@ public class InsertionSort{
         int i = 1;
         int j;
         
-        temp = new ArrayList<Integer>(Arrays.asList(array));
-        snap_shots.add(temp);
+        snap_shots.add(new ArrayList<Integer>(Arrays.asList(array)));
 
         while(i<array.length){
             j = i;
             while ((j>0) && (array[j] < array[j-1])){
                 //swap
-                temp = new ArrayList<Integer>(Arrays.asList(array));
-                snap_shots.add(temp);
+                snap_shots.add(new ArrayList<Integer>(Arrays.asList(array)));
                 swap(j,j-1);
                 j--; 
             }
@@ -49,8 +59,4 @@ public class InsertionSort{
         }
     }
 
-    public ArrayList<ArrayList<Integer>> show_snaps(){
-        //returns all snap shots of the array
-        return snap_shots;
-    }
 }

@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class QuickSort implements Sorts{
+public class QuickSort{
     public static Integer[] array; 
     public ArrayList<ArrayList<Integer>> snap_shots = new ArrayList<ArrayList<Integer>>();
 
-    public QuickSort(Integer[] input){
-        array = input;
+    public QuickSort(Integer[] input_array){
+        array = input_array;
     }
 
     public void set_array(Integer[] input_array){

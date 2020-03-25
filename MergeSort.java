@@ -1,23 +1,36 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+
 public class MergeSort {
     /* The MergeSort class allows you to store an integer arraylist and sort them
     by calling a sorting function. The sorting function will record all steps of the 
     sorting and store them as snap shots. There is a function is can return all these
     snap shots. There is also a functon that can return the array list in this object.
      */
-    public Integer[] array;
+    public static Integer[] array;
     public ArrayList<ArrayList<Integer>> snap_shots = new ArrayList<ArrayList<Integer>>();
-    public ArrayList<Integer> temp;
 
     public MergeSort(Integer[] input_array){
         //initialize the integer array
         array = input_array;
     }
 
-    public Integer[] getArray(){
-        //returns the integer array
+    public void set_array(Integer[] input_array){
+        array = input_array;
+    }
+
+    public Integer[] get_array(){
+        //returns the integar array
         return array;
+    }
+
+    public ArrayList<ArrayList<Integer>> show_snaps(){
+        //returns all snap shots of the array
+        return snap_shots;
+    }
+
+    public void clear_history(){
+        snap_shots = new ArrayList<ArrayList<Integer>>();
     }
     
     public void merge(int left, int mid ,int right){
@@ -46,8 +59,7 @@ public class MergeSort {
                 l++;
             }
             //records a snap shot of the array
-            temp = new ArrayList<Integer>(Arrays.asList(array));
-            snap_shots.add(temp);
+            snap_shots.add(new ArrayList<Integer>(Arrays.asList(array)));
             j++;
         }
 
@@ -58,8 +70,7 @@ public class MergeSort {
                 j++;
                 k++;
                 //records a snap shot of the array
-                temp = new ArrayList<Integer>(Arrays.asList(array));
-                snap_shots.add(temp);
+                snap_shots.add(new ArrayList<Integer>(Arrays.asList(array)));
             }
         }
         //if there is anything left on the right array, add it on the end of the original array 
@@ -69,8 +80,7 @@ public class MergeSort {
                 j++;
                 l++;
                 //records a snap shot of the array
-                temp = new ArrayList<Integer>(Arrays.asList(array));
-                snap_shots.add(temp);
+                snap_shots.add(new ArrayList<Integer>(Arrays.asList(array)));
             }
         }
 
@@ -90,16 +100,10 @@ public class MergeSort {
 
     public void merge_sort(){
         //records a snap shot of the array
-        temp = new ArrayList<Integer>(Arrays.asList(array));
-        snap_shots.add(temp);
+        snap_shots.add(new ArrayList<Integer>(Arrays.asList(array)));
 
         //calls the recursive sorting function
         sort(0,array.length-1);
-    }
-
-    public ArrayList<ArrayList<Integer>> show_snaps(){
-        //returns all snap shots of the array
-        return snap_shots;
     }
 
 }
