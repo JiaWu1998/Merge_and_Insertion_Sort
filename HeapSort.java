@@ -6,22 +6,27 @@ public class HeapSort{
     public ArrayList<ArrayList<Integer>> snap_shots = new ArrayList<ArrayList<Integer>>();
 
     public HeapSort(Integer[] input){
+        //set integer array as input
         array = input;
     }
 
     public void set_array(Integer[] input_array){
+        //initialize the integer array
         array = input_array;
     }
 
     public Integer[] get_array(){
+        //returns the integer array
         return array;
     }
 
     public ArrayList<ArrayList<Integer>> show_snaps(){
+        //returns all snap shots of the array
         return snap_shots;
     }
 
     public void clear_history(){
+        //removes all snap shots of the array
         snap_shots = new ArrayList<ArrayList<Integer>>();
     }
 
@@ -34,19 +39,21 @@ public class HeapSort{
     }
 
     public void heapify(int i){
+        //creates parent node, and left and right children nodes
         int parent = array[i];
         int left_index = i*2 + 1;
         int right_index = i*2 + 2; 
 
-        if (left_index >= array.length && right_index >= array.length){
+
+        if (left_index >= array.length && right_index >= array.length){ //return if left and right children nodes do not exist
             return;
-        }else if (left_index >= array.length){
+        }else if (left_index >= array.length){ //swap if left index is greater than half of array and right child is greater than parent
             if (array[right_index] > parent){
                 swap(i, right_index);
                 reheap_down(right_index, array.length);
             }
             return;
-        }else if (right_index >= array.length){
+        }else if (right_index >= array.length){ //swap if right index is greater than half of array and left child is greater than parent
             if (array[left_index] > parent){
                 swap(i, left_index);
                 reheap_down(left_index, array.length);
@@ -55,13 +62,13 @@ public class HeapSort{
         }
 
 
-        if (array[left_index] > array[right_index]){
+        if (array[left_index] > array[right_index]){  //if left child is larger than right and larger than parent, swap with parent
             if (array[left_index] > parent){
                 swap(i, left_index);
                 reheap_down(left_index, array.length);
             }
         }else{
-            if (array[right_index] > parent){
+            if (array[right_index] > parent){ //swap right child if larger than parent
                 swap(i, right_index);
                 reheap_down(right_index, array.length);
             }
@@ -69,6 +76,7 @@ public class HeapSort{
     }
 
     public void build_heap(){
+        //builds the heap
         for(int i = array.length/2; i >= 0; i--){
             heapify(i);
         }
@@ -118,6 +126,7 @@ public class HeapSort{
     }
 
     public void sort(){
+        //executes the sort function
         build_heap();
 
         for(int i = array.length - 1; i >= 1; i--){
