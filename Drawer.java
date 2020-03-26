@@ -14,7 +14,7 @@ public class Drawer extends JPanel{
         super.paintComponent(g);
         
         //draws a snap shot
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         int w = getWidth()/current_snap_shot.size();
         if(w == 0){
             g.drawString("Make Your Screen Bigger.", getWidth()/2, getHeight()/2);
@@ -35,5 +35,3 @@ public class Drawer extends JPanel{
         bound = b;    
     }
 }
-
-
