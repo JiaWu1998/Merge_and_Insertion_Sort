@@ -28,7 +28,7 @@ public class RadixSort{
     }
 
     public void count_sort(int exponent){
-        Integer[] temp = new Integer[array.length];
+        Integer[] temp = array.clone();
         int[] counter = new int[10];
 
         Arrays.fill(counter,0);
@@ -43,6 +43,7 @@ public class RadixSort{
 
         for(int i=array.length-1; i >= 0; i--){
             temp[counter[(array[i]/exponent)%10]-1] = array[i];
+            snap_shots.add(new ArrayList<Integer>(Arrays.asList(temp)));
             counter[(array[i]/exponent)%10] -= 1;
         }
 

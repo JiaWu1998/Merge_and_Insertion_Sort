@@ -64,7 +64,7 @@ public class CountingSort{
         //That count will be the index of that integer in the temp array.
         for(int i=0; i<array.length; i++){
             temp[index[array[i]]-1] = array[i];
-            snap_shots.add(new ArrayList<Integer>(Arrays.asList(array)));
+            snap_shots.add(new ArrayList<Integer>(Arrays.asList(temp)));
             index[array[i]] -= 1;
         }
 
