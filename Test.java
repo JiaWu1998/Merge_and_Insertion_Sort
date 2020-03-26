@@ -14,12 +14,14 @@ A20397415
 Kevin Cho
 Seat 13
 A20393339
-
 */
 
 import java.util.Random;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -126,7 +128,7 @@ public class Test {
         all_snap_count = count.show_snaps();
 
         // initialize GUI frame and constants
-        JFrame frame = new JFrame("heap Sort");
+        JFrame frame = new JFrame("Heap Sort");
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -135,8 +137,15 @@ public class Test {
         // This left panel stores everything other than the sorting animation
         JPanel panel_left = new JPanel();
         panel_left.setLayout(new BoxLayout(panel_left, BoxLayout.Y_AXIS));
-        panel_left.setBorder(new LineBorder(new Color(0,0,0), 2, true));
+        panel_left.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 3, true), "Tools", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
         panel_left.setBackground(Color.WHITE);
+
+        JLabel timeHeap = new JLabel("Heap Sort Time: " + total_time_heap);
+        JLabel timeQuick = new JLabel("Quick Sort Time: " + total_time_quick);
+        JLabel timeMerge = new JLabel("Merge Sort Time: " + total_time_merge);
+        JLabel timeInsert = new JLabel("Insertion Sort Time: " +total_time_insert);
+        JLabel timeRadix = new JLabel("Radix Sort Time: " + total_time_radix);
+        JLabel timeCount = new JLabel("Counting Sort Time: "+total_time_count);
 
         // add a button the left panel to switch between sorts
         JPanel button_panel = new JPanel();
@@ -223,18 +232,21 @@ public class Test {
 
         panel_left.add(button_panel);
         
-        // add Text field to the left panel to change problem size
+		//JSlider has been added
         JPanel text_field_panel = new JPanel();
         text_field_panel.setBackground(Color.WHITE);
-        JLabel problem_size_label = new JLabel("Enter Problem Size:");
+        JLabel problem_size_label = new JLabel("Size: " + n);
         problem_size_label.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
-        JTextField problem_size = new JTextField(10);
-
-        problem_size.setAlignmentX(Component.CENTER_ALIGNMENT);
-        problem_size.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) throws IllegalArgumentException{
-                try{
-                    int temp_n = Integer.parseInt(problem_size.getText());
+        JSlider problem_s = new JSlider();
+        problem_s.setValue(2);
+        problem_s.setBackground(Color.WHITE);
+        problem_s.setMaximum(10);
+        problem_s.setMinimum(2);
+        problem_s.addChangeListener(new ChangeListener(){
+            public void stateChanged(ChangeEvent e) {
+                int problem_size = problem_s.getValue() * 50;
+                int temp_n = problem_size;
+                problem_size_label.setText("Size: " + problem_size);
                     if(temp_n > 0){
                         n = temp_n;
                         array = new Integer[n];
@@ -248,6 +260,7 @@ public class Test {
                         end_time = System.nanoTime();
                         total_time_quick = end_time - start_time;
                         System.out.println(total_time_quick);
+                        timeQuick.setText("Quick Sort Time: " + total_time_quick);
                         System.out.println("Finished quick Sort.");
                         all_snap_quick = quick.show_snaps();
 
@@ -259,6 +272,7 @@ public class Test {
                         end_time = System.nanoTime();
                         total_time_heap = end_time - start_time;
                         System.out.println(total_time_heap);
+                        timeHeap.setText("Heap Sort Time: " + total_time_heap);
                         System.out.println("Finished heap Sort.");
                         all_snap_heap = heap.show_snaps();
 
@@ -270,6 +284,7 @@ public class Test {
                         end_time = System.nanoTime();
                         total_time_merge = end_time - start_time;
                         System.out.println(total_time_merge);
+                        timeMerge.setText("Merge Sort Time: " + total_time_merge);
                         System.out.println("Finished merge Sort.");
                         all_snap_merge = merge.show_snaps();
 
@@ -281,6 +296,7 @@ public class Test {
                         end_time = System.nanoTime();
                         total_time_insert = end_time - start_time;
                         System.out.println(total_time_insert);
+                        timeInsert.setText("Insertion Sort Time: " + total_time_insert);
                         System.out.println("Finished insert Sort.");
                         all_snap_insert = insert.show_snaps();
 
@@ -292,6 +308,7 @@ public class Test {
                         end_time = System.nanoTime();
                         total_time_radix = end_time - start_time;
                         System.out.println(total_time_radix);
+                        timeRadix.setText("Radix Sort Time: " + total_time_radix);
                         System.out.println("Finished radix Sort.");
                         all_snap_radix = radix.show_snaps();
 
@@ -303,36 +320,26 @@ public class Test {
                         end_time = System.nanoTime();
                         total_time_count = end_time - start_time;
                         System.out.println(total_time_count);
+                        timeCount.setText("Counting Sort Time: " + total_time_count);
                         System.out.println("Finished counting Sort.");
                         all_snap_count = count.show_snaps();
-
-                    }else{
-                        System.out.print("Invalid problem size");
                     }
-                }catch(IllegalArgumentException a){
-                    System.out.print("Invalid problem size");
-                    JOptionPane.showMessageDialog(null, "Try a valid size");
-                }
             }
         });
+
+        problem_s.setAlignmentX(Component.CENTER_ALIGNMENT);
         text_field_panel.add(problem_size_label);
-        text_field_panel.add(problem_size);
+        text_field_panel.add(problem_s);
         panel_left.add(text_field_panel);
 
         JPanel lblPanel = new JPanel();
         lblPanel.setBackground(Color.WHITE);
         lblPanel.setLayout(new BoxLayout(lblPanel,BoxLayout.Y_AXIS));
-        JLabel timeHeap = new JLabel("Heap Sort Time: " + total_time_heap);
         timeHeap.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        JLabel timeQuick = new JLabel("Quick Sort Time: " + total_time_quick);
         timeQuick.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        JLabel timeMerge = new JLabel("Merge Sort Time: " + total_time_merge);
         timeMerge.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        JLabel timeInsert = new JLabel("Insertion Sort Time: " +total_time_insert);
         timeInsert.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        JLabel timeRadix = new JLabel("Radix Sort Time: " + total_time_radix);
         timeRadix.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        JLabel timeCount = new JLabel("Counting Sort Time: "+total_time_count);
         timeCount.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
         lblPanel.add(timeHeap);
         lblPanel.add(timeQuick);
@@ -348,7 +355,7 @@ public class Test {
         // initialize drawing panel
         Drawer draw = new Drawer();
         draw.setMaxNum(100);
-        draw.setBackground(Color.GRAY);
+        draw.setBackground(Color.DARK_GRAY);
 
         //add the drawing panel to the frame. aka: animation
         while(true){
